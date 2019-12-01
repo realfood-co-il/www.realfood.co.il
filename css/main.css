@@ -1,0 +1,42 @@
+:root {
+  --color-blue-sky: #4cb5f5;
+  --color-granite: #b7bbb6;
+  --color-pine: #34675c;
+  --color-fields: #b3c100;
+
+  --color-dark-red:   hsl( 12, 60%, 23.5%);
+  --color-red:        hsl(356, 44%, 35.9%);
+  --color-dark-cyan:  hsl(192, 44%, 37.6%);
+  --color-cyan      : hsl(176, 60%, 33.9%);
+}
+
+* {
+  text-align: right;
+  direction: rtl;
+}
+
+html {
+  height: 100%;
+  background: url(../bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: auto auto;
+      -moz-background-size: auto auto;
+        -o-background-size: auto auto;
+  background-size: cover;
+}
+
+body {
+  height: 100%;
+  background: transparent;
+}
+
+.container {
+  padding: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: rgba(255,255,255,0.95);
+}
+
+footer {
+  color: white;
+  background-color: var(--color-dark-cyan);
+}
