@@ -1,0 +1,14 @@
+{
+  "name": "realfood.co.il",
+  "private": true,
+  "scripts": {
+    "start": "npm run -s develop",
+    "build": "gridsome build",
+    "develop": "gridsome develop",
+    "explore": "gridsome explore"
+  },
+  "dependencies": {
+    "googleapis": "^47.0.0",
+    "gridsome": "^0.7.12"
+  }
+}

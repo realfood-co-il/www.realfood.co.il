@@ -1,0 +1,25 @@
+{
+  "users": [
+    { "id": "AncestryFoundation", "name": "AncestryFoundation" },
+    { "id": "charliefoundation", "name": "The Charlie Foundation" },
+    { "id": "CrossFitHQ", "name": "CrossFit" },
+    { "id": "lowcarbdownunder", "name": "Low Carb Down Under" },
+    { "id": "ZoeHarcombe", "name": "Zoe Harcombe" }
+  ],
+  "channels": [
+    { "id": "UC2Kw1SnSYxJFPlmECarRnWA", "name": "The Real Carrie Brown" },
+    { "id": "UC3vzrYZcGqpgchc5sYM5Ybw", "name": "Dr. Paul Mason" },
+    { "id": "UCaGCraBhCqXkRPGxVKLcs0A", "name": "L. Amber O'Hearn" },
+    { "id": "UCbkeZcRugU8bUcOKwBIHjsg", "name": "Virta Health" },
+    { "id": "UCDePE3gpE4vhnB-quQ75HnQ", "name": "Ketogenic Lifestyle" },
+    { "id": "UCDMsvrB3Tkxrtms0ug2ii1g", "name": "Karen Thomson - SugarFree" },
+    { "id": "UCF2Oy5c7T1R_4s1skNO0TwQ", "name": "High Intensity Health" },
+    { "id": "UCjVt3l67O7SxJDK6KfwpIXQ", "name": "MetabolixOrg" },
+    { "id": "UCkUl8S70DCT66YJ30w75d6A", "name": "Epigenix Foundation" },
+    { "id": "UCLzJ6fHwgjm8xwKPvMiRJ3w", "name": "Keto Chow" },
+    { "id": "UCMdq0ZrNpYThp2A5MjSg_5A", "name": "2 Keto Dudes" },
+    { "id": "UCPn4FsiQP15nudug9FDhluA", "name": "Ivor Cummings" },
+    { "id": "UCyBd937HrItCCZyTULR3Reg", "name": "Low Carb USA" },
+    { "id": "UCZO0WD6hn02_6b0_MNTKPgQ", "name": "Public Health Collaboration" }
+  ]
+}
