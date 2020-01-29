@@ -1,4 +1,5 @@
-'strict';
+"use strict"
+
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
 // Learn more: https://gridsome.org/docs/server-api/
@@ -6,56 +7,19 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const fs = require('fs')
-const { google } = require('googleapis')
+import fs from 'fs'
+import youtube from './lib/youtube.mjs'
 
-const google_key = JSON.parse(fs.readFileSync('secrets.json'))['google_key']
-const videos = JSON.parse(fs.readFileSync('videos.json'))
+const videos = JSON.parse(await fs.promises.readFile('videos.json'))
 
-const youtube = google.youtube({ version: 'v3', auth: google_key })
-
-module.exports = function (api) {
+export default function (api) {
   api.loadSource(async ({ addCollection, store }) => {
 
-    // youtube#channels
     const youtubeChannels = addCollection('YouTubeChannel')
-    await videos['channels'].forEach(async (channel) => {
-      let response = {}
-      const cacheFile = `youtube/channels/${channel.id}.json`
-      if (fs.existsSync(cacheFile)) {
-        response = JSON.parse(fs.readFileSync(cacheFile))
-      } else {
-        response = await youtube.channels.list({
-          part: 'snippet,contentDetails',
-          id: channel.id
-        })
-        fs.writeFileSync(cacheFile, JSON.stringify(response))
-      }
-      youtubeChannels.addNode({
-        ...response.data.items[0],
-        id: response.data.items[0].id
-      })
-    })
+    youtube.channels(videos.channels).forEach(channel => youtubeChannels.addNode(channel))
 
-    // youtube#users
     const youtubeUsers = addCollection('YouTubeUser')
-    await videos['users'].forEach(async (user) => {
-      let response = {}
-      const cacheFile = `youtube/users/${user.id}.json`
-      if (fs.existsSync(cacheFile)) {
-        response = JSON.parse(fs.readFileSync(cacheFile))
-      } else {
-        response = await youtube.channels.list({
-          part: 'snippet,contentDetails',
-          forUsername: user.id
-        })
-        fs.writeFileSync(cacheFile, JSON.stringify(response))
-      }
-      youtubeUsers.addNode({
-        ...response.data.items[0],
-        id: response.data.items[0].id
-      })
-    })
+    youtube.users(videos.users).forEach(user => youtubeUsers.addNode(user))
 
     // youtube#playlistItemList from channels
     const youtubePlaylistItems = addCollection('YouTubePlaylistItem')
@@ -63,15 +27,15 @@ module.exports = function (api) {
       const playlistId = channel.contentDetails.relatedPlaylists.uploads
       let response = {}
       const cacheFile = `youtube/playlists/${playlistId}.json`
-      if (fs.existsSync(cacheFile)) {
-        response = JSON.parse(fs.readFileSync(cacheFile))
+      if (existsSync(cacheFile)) {
+        response = JSON.parse(readFileSync(cacheFile))
       } else {
         response = await youtube.playlistItems.list({
           part: "snippet,contentDetails,status",
           playlistId,
           maxResults: 50
         })
-        fs.writeFileSync(cacheFile, JSON.stringify(response))
+        writeFileSync(cacheFile, JSON.stringify(response))
       }
       response.data.items.forEach(item => {
         youtubePlaylistItems.addNode({
@@ -91,8 +55,8 @@ module.exports = function (api) {
       const playlistId = user.contentDetails.relatedPlaylists.uploads
       let response = {}
       let cacheFile = `youtube/playlists/${playlistId}.json`
-      if (fs.existsSync(cacheFile)) {
-        response = JSON.parse(fs.readFileSync(cacheFile))
+      if (existsSync(cacheFile)) {
+        response = JSON.parse(readFileSync(cacheFile))
       } else {
         let pageToken
         do {
@@ -103,7 +67,7 @@ module.exports = function (api) {
             pageToken
           })
           pageToken = undefined
-          fs.writeFileSync(cacheFile, JSON.stringify(response))
+          writeFileSync(cacheFile, JSON.stringify(response))
           if (Object.keys(response.data).includes('nextPageToken')) {
             pageToken = response.data.nextPageToken
             cacheFile = `youtube/playlists/${playlistId}-${pageToken}.json`
@@ -123,14 +87,14 @@ module.exports = function (api) {
       const videoId = playlistItem.contentDetails.videoId
       let response = {}
       const cacheFile = `youtube/videos/${videoId}.json`
-      if (fs.existsSync(cacheFile)) {
-        response = JSON.parse(fs.readFileSync(cacheFile))
+      if (existsSync(cacheFile)) {
+        response = JSON.parse(readFileSync(cacheFile))
       } else {
         response = await youtube.videos.list({
           part: "snippet,contentDetails",
           id: videoId
         })
-        fs.writeFileSync(cacheFile, JSON.stringify(response))
+        writeFileSync(cacheFile, JSON.stringify(response))
       }
     })
 
@@ -145,7 +109,7 @@ module.exports = function (api) {
     // })
     // fs.writeFileSync('channelVideos.json', JSON.stringify(youtubeSearchVideos, null, 2))
 
-    const youtubeSearchVideos = JSON.parse(fs.readFileSync("channelVideos.json"))
+    const youtubeSearchVideos = JSON.parse(readFileSync("channelVideos.json"))
 
     youtubeSearchVideos.data.items.forEach(video => {
       youtubeVideos.addNode({
@@ -155,22 +119,6 @@ module.exports = function (api) {
       })
     })
 
-    // .forEach(video => {
-    //   youtubeVideo.addNode(video)
-    // })
-
-    // // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-    // const youtubeChannels = await youtube.channels.list({
-    //   forUsername: 'lowcarbdownunder',
-    //   maxResults: 50,
-    //   part: 'id,snippet'
-    // })
-    // const youtubeChannel = addCollection({
-    //   typeName: 'YouTubeChannel'
-    // })
-    // youtubeChannels.data.items.forEach(channel => {
-    //   youtubeChannel.addNode(channel)
-    // })
   })
 
   // api.createPages(({ createPage }) => {

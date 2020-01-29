@@ -1,6 +1,7 @@
 {
   "name": "realfood.co.il",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "npm run -s develop",
     "build": "gridsome build",
@@ -8,6 +9,7 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "@types/node": "^13.5.1",
     "googleapis": "^47.0.0",
     "gridsome": "^0.7.12"
   }
