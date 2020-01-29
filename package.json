@@ -1,7 +1,6 @@
 {
   "name": "realfood.co.il",
   "private": true,
-  "type": "module",
   "scripts": {
     "start": "npm run -s develop",
     "build": "gridsome build",
