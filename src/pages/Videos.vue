@@ -11,30 +11,34 @@
 </template>
 
 <page-query>
-query Videos ($page: Int) {
-  videos: allYouTubeVideo (perPage: 10, page: $page) @paginate {
-    totalCount
-    pageInfo {
-      totalPages
-      currentPage
-      isFirst
-      isLast
-    }
-    edges {
-      node {
-        id
-        path
-        snippet {
-          title
-          thumbnails {
-            medium { url, width, height }
+  query Videos($page: Int) {
+    videos: allYtVideo(perPage: 10, page: $page) @paginate {
+      totalCount
+      pageInfo {
+        totalPages
+        currentPage
+        isFirst
+        isLast
+      }
+      edges {
+        node {
+          id
+          # path
+          snippet {
+            title
+            thumbnails {
+              medium {
+                url
+                width
+                height
+              }
+            }
+            publishedAt
           }
-          publishedAt
         }
       }
     }
   }
-}
 </page-query>
 
 <script>

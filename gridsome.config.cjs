@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 // This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
 
@@ -10,14 +11,15 @@ module.exports = {
   siteDescription: 'אוכל אמיתי מביא את מיטב ההרצאות מרופאים ומומחים המסבירים על ההשפעה של תזונה אמיתית על בריאות',
   titleTemplate: '%s - אוכל אמיתי',
   templates: {
-    YouTubeVideo: [{
+    YtVideo: [{
       path: '/video/:id',
-      component: './src/templates/YouTubeVideo.vue'
+      component: './src/templates/YtVideo.vue',
+      alias: '/video/:id/:snippet__title',
     }],
-    YouTubeVideo: [{
-      path: '/video/:id/:snippet__title',
-      component: './src/templates/YouTubeVideo.vue'
-    }],
+    // YtVideo: [{
+    //   path: '/video/:id/:snippet__title',
+    //   component: './src/templates/YouTubeVideo.vue'
+    // }],
   },
   plugins: [],
   configureWebpack: {

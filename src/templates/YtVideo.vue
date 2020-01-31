@@ -9,7 +9,7 @@
 
 <page-query>
 query($id: ID!) {
-  video: youTubeVideo(id: $id) {
+  video: ytVideo(id: $id) {
     snippet {
       title
       description
