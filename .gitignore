@@ -1,4 +1,4 @@
-secrets.json
+secrets*.json
 *.log
 .cache
 .DS_Store
