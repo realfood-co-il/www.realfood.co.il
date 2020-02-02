@@ -10,16 +10,9 @@ module.exports = {
   siteUrl: 'https://www.realfood.co.il',
   siteDescription: 'אוכל אמיתי מביא את מיטב ההרצאות מרופאים ומומחים המסבירים על ההשפעה של תזונה אמיתית על בריאות',
   titleTemplate: '%s - אוכל אמיתי',
+  // https://gridsome.org/docs/templates/
   templates: {
-    YtVideo: [{
-      path: '/video/:id',
-      component: './src/templates/YtVideo.vue',
-      alias: '/video/:id/:snippet__title',
-    }],
-    // YtVideo: [{
-    //   path: '/video/:id/:snippet__title',
-    //   component: './src/templates/YouTubeVideo.vue'
-    // }],
+    YtVideo: '/video/:id',
   },
   plugins: [],
   configureWebpack: {

@@ -3,6 +3,7 @@
     Videos ({{ $page.videos.totalCount }}):
     <ul v-for="video in $page.videos.edges" :key="video.node.id">
       <li>
+        <img :src="video.node.snippet.thumbnails.medium.url" width="160" /><br />
         <g-link :to="video.node.path"><i v-html="video.node.snippet.title"></i></g-link>
       </li>
     </ul>

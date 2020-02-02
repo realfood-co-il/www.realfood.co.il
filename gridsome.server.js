@@ -14,15 +14,15 @@ const youtubeSource = function (api) {
   api.loadSource(async ({ addCollection, store }) => {
     const videos = JSON.parse(await fs.promises.readFile('videos.json'))
 
-    const ytChannels = addCollection('ytChannel')
+    const ytChannels = addCollection('YtChannel')
     const channelsDetail = await youtube.channels(videos.channels)
     channelsDetail.forEach( channel => ytChannels.addNode(channel) )
 
-    const ytUsers = addCollection('ytUser')
+    const ytUsers = addCollection('YtUser')
     const usersDetail = await youtube.users(videos.users)
     usersDetail.forEach( user => ytUsers.addNode(user) )
 
-    const ytVideos = addCollection('ytVideo')
+    const ytVideos = addCollection('YtVideo')
 
     async function addVideosFromPlaylist(playlistItems) {
       if (typeof playlistItems === 'undefined') {
@@ -30,10 +30,10 @@ const youtubeSource = function (api) {
         return
       }
       const playlistVideos = playlistItems.map(playlistItem => (
-        { id: playlistItem.contentDetails.videoId }
+        { id: playlistItem.snippet.resourceId.videoId }
       ))
       const videosDetail = await youtube.videos(playlistVideos)
-      videosDetail.forEach(video => ytVideos.addNode(video) )
+      videosDetail.forEach(video => ytVideos.addNode(video))
     }
 
     const channelUploadPlaylists = ytChannels.data().map(channel => ({ id: channel.contentDetails.relatedPlaylists.uploads }))
@@ -47,14 +47,15 @@ const youtubeSource = function (api) {
     const videoIDs = ytVideos.data().map(video => ({ id: video.id }))
     const videoCaptions = await youtube.videoCaptions(videoIDs)
 
-    const captionIDs = videoCaptions.map( (caption) => {
-      if (caption && caption.id) {
-        return { id: caption.id }
-      }
-      console.log(`Caption id was not found in caption`, caption)
-    }).filter(x => x)
-    const captionDownloads = await youtube.captions(captionIDs)
-    console.dir(captionDownloads)
+    // const ytCaptions = addCollection('YtCaption')
+    // const captionIDs = videoCaptions.map( (caption) => {
+    //   if (caption && caption.id) {
+    //     return { id: caption.id }
+    //   }
+    //   console.log(`Caption id was not found in caption`, caption)
+    // }).filter(x => x)
+    // // TODO: Add caption downloads to collections
+    // const captionDownloads = await youtube.captions(captionIDs)
   })
 
   // api.createPages(({ createPage }) => {

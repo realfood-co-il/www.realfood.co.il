@@ -8,20 +8,24 @@
 </template>
 
 <page-query>
-query($id: ID!) {
-  video: ytVideo(id: $id) {
-    snippet {
-      title
-      description
-      channelId
-      channelTitle
-      thumbnails {
-        high { url, width, height }
+  query($id: ID!) {
+    video: ytVideo(id: $id) {
+      snippet {
+        title
+        description
+        channelId
+        channelTitle
+        thumbnails {
+          high {
+            url
+            width
+            height
+          }
+        }
+        publishedAt
       }
-      publishedAt
     }
   }
-}
 </page-query>
 
 <script>
